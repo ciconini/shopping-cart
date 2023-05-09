@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col">
+    <products-list [products]="products$ | async">
+      <ng-container *forProduct="let product; ofType: 'default'">
+        <div class="product-image"></div>
+        <h4>{{ product.name }} (custom default)</h4>
+        <cart-item-control [product]="product"></cart-item-control>
+      </ng-container>
+
+      <ng-container *forProduct="let product; ofType: 'promo'">
+        <div class="product-image"></div>
+        <h4>{{ product.name }} ({{ product.type }})</h4>
+        <cart-item-control [product]="product"></cart-item-control>
+      </ng-container>
+
+      <ng-container *forProduct="let product; ofType: 'outlet'">
+        <div class="product-image"></div>
+        <h4>{{ product.name }} ({{ product.type }})</h4>
+        <cart-item-control [product]="product"></cart-item-control>
+      </ng-container>
+    </products-list>
+  </div>
+  <hr />
+  <div class="col-3">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">In Cart</h4>
+      </div>
+      <cart-widget></cart-widget>
+    </div>
+  </div>
+</div>

@@ -24,16 +24,44 @@ export class CartService {
     ) { }
 
     getStoredCartItems() {
-        this.dataService.fetchAll().subscribe();
+        this.dataService.fetchAll().subscribe((resp: any) => {
+            this._products.items = [...resp];
+            this._products.total = this.calculateTotal(this._products.items);
+            this.updateCartState(this._products);
+        });
     }
 
 
     addProduct(product: Product) {
-       
+      let ind = this._products.items.findIndex(e => e.id === product.id);
+      if (ind > -1) {
+        this._products.items[ind].amount++;
+        this.calculateSubtotal(this._products.items[ind]);
+      } else {
+        this._products.items.push({
+          id: product.id,
+          amount: 1,
+          product: product,
+          subtotal: product.price
+        });
+      }
+      this._products.total = this.calculateTotal(this._products.items);
+      this.updateCartState(this._products);
     }
 
     removeProduct(product: Product, shouldRemoveAll = false) {
-      
+      const itemToRemove = this._products.items.find(item => item.id === product.id)
+      if (itemToRemove) {
+        let ind = this._products.items.indexOf(itemToRemove);
+        if (shouldRemoveAll || this._products.items[ind].amount === 1) {
+          this._products.items.splice(ind, 1);
+        } else {
+          this._products.items[ind].amount--; 
+          this.calculateSubtotal(this._products.items[ind]);
+        }
+      }
+      this._products.total = this.calculateTotal(this._products.items);
+      this.updateCartState(this._products);
     }
 
     //HELPER METHODS

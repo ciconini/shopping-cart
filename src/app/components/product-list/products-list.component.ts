@@ -37,8 +37,6 @@ export class ProductsListComponent implements OnInit, AfterContentInit, AfterVie
     ngAfterContentInit(): void {
         this.productContainers.forEach(container => {
             this.templates[container.forProductOfType] = container.template;
-            console.log(container.template);
-            
         });
     }
 

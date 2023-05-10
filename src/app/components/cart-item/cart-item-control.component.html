@@ -1,8 +1,8 @@
-<span *ngIf="item; else notInCart">
-  <button (click)="cart.removeProduct(product)">-</button>
-  <input disabled [value]="item.amount" />
-  <button (click)="cart.addProduct(product)">+</button>
+<span *ngIf="item; else notInCart" class="d-flex">
+  <button class="btn btn-primary rounded-0" (click)="cart.removeProduct(product)">-</button>
+  <input class="form-control rounded-0" disabled [value]="item.amount" />
+  <button class="btn btn-primary rounded-0" (click)="cart.addProduct(product)">+</button>
 </span>
 <ng-template #notInCart>
-  <button (click)="cart.addProduct(product)">Add to Cart</button>
+  <button class="btn btn-primary" (click)="cart.addProduct(product)">Add to Cart</button>
 </ng-template>
